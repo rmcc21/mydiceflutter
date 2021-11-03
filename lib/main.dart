@@ -17,42 +17,51 @@ void main() {
   );
 }
 
-class DicePage extends StatelessWidget {
+class DicePage extends StatefulWidget {
   const DicePage({Key? key}) : super(key: key);
 
   @override
+  State<DicePage> createState() => _DicePageState();
+}
+
+class _DicePageState extends State<DicePage> {
+  var random = Random();
+
+  var leftDiceNumber = 1;
+
+  var rightDiceNumber = 1;
+
+  @override
   Widget build(BuildContext context) {
-    var random = Random();
-    var leftDiceNumber = 1;
-    var rightDiceNumber = 1;
     return Center(
-      child: Center(
-        child: Row(
-          children: [
-            Expanded(
-              child: TextButton(
-                child:
-                    Image(image: AssetImage("images/dice$leftDiceNumber.png")),
-                onPressed: () {
-                  print("Button 1 pressed");
-                  leftDiceNumber = random.nextInt(6);
-                },
-              ),
-              flex: 1,
+      child: Row(
+        children: [
+          Expanded(
+            child: TextButton(
+              child: Image(image: AssetImage("images/dice$leftDiceNumber.png")),
+              onPressed: () {
+                setState(() {
+                  leftDiceNumber = random.nextInt(5) + 1;
+                  print("Button 1 pressed: value $leftDiceNumber");
+                });
+              },
             ),
-            Expanded(
-              child: TextButton(
-                child:
-                    Image(image: AssetImage("images/dice$rightDiceNumber.png")),
-                onPressed: () {
-                  print("Button 2 pressed");
-                  rightDiceNumber = random.nextInt(6);
-                },
-              ),
-              flex: 1,
+            flex: 1,
+          ),
+          Expanded(
+            child: TextButton(
+              child:
+                  Image(image: AssetImage("images/dice$rightDiceNumber.png")),
+              onPressed: () {
+                setState(() {
+                  rightDiceNumber = random.nextInt(5) + 1;
+                  print("Button 2 pressed: value $rightDiceNumber");
+                });
+              },
             ),
-          ],
-        ),
+            flex: 1,
+          ),
+        ],
       ),
     );
   }
